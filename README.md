@@ -12,6 +12,7 @@
 
 ### 🎴 完整的塔羅牌系統
 - **78 張塔羅牌** - 包含 22 張大阿爾克那與 56 張小阿爾克那
+- **真實牌卡藝術** - 使用 1909 年公有領域 Rider-Waite-Smith 牌卡插畫
 - **正位與逆位** - 每張牌都有正位和逆位的完整牌義
 - **繁體中文** - 所有牌卡名稱、關鍵詞和牌義均為繁體中文(台灣)
 - **雙語支援** - 卡牌同時顯示中文和英文名稱
@@ -241,9 +242,24 @@ OPENAI_MODEL=your-model-name
 - **API 安全** - OpenAI API key 僅在伺服器端使用,不會暴露給前端
 - **無追蹤** - 應用程式不包含任何追蹤或分析程式碼
 
+## 🎨 牌卡藝術版權聲明
+
+本應用使用的塔羅牌圖像來自 **1909 年 Rider-Waite-Smith 塔羅牌**,由藝術家 **Pamela Colman Smith** 繪製。這些圖像在美國屬於公有領域(public domain)。
+
+- **來源**: [Wikimedia Commons - Rider-Waite Tarot](https://commons.wikimedia.org/wiki/Category:Rider-Waite_tarot_deck)
+- **藝術家**: Pamela Colman Smith (1878-1951)
+- **出版年份**: 1909
+- **授權**: 公有領域 / Public Domain
+
+圖像檔案位於 `public/cards/` 目錄下,所有 78 張牌卡均來自 Wikimedia Commons 的公開檔案庫。
+
 ## 📄 授權
 
 MIT License - 詳見 LICENSE 檔案
+
+### 第三方內容授權
+
+- **塔羅牌圖像**: 公有領域 (Public Domain) - Pamela Colman Smith, 1909 Rider-Waite-Smith Tarot
 
 ## 🤝 貢獻
 
