@@ -1,7 +1,7 @@
-import { TarotCard, DrawnCard, Reading } from '@/types/tarot';
+import { DrawnCard, Reading } from '@/types/tarot';
 import { tarotDeck } from '@/data/tarotDeck';
 
-export function shuffleDeck(): TarotCard[] {
+export function shuffleDeck() {
   const deck = [...tarotDeck];
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -60,14 +60,14 @@ export function generateLocalReading(
     ? `針對你的問題:「${question}」\n\n` 
     : '根據你抽取的牌卡:\n\n';
 
-  cards.forEach((drawnCard, index) => {
+  cards.forEach((drawnCard) => {
     const { card, position, isReversed } = drawnCard;
     const orientation = isReversed ? '逆位' : '正位';
     const meaning = isReversed ? card.meanings.reversed : card.meanings.upright;
     const keywords = isReversed ? card.keywords.reversed : card.keywords.upright;
 
-    interpretation += `**${position}:${card.name.zh}(${orientation})**\n`;
-    interpretation += `關鍵詞:${keywords.join('、')}\n`;
+    interpretation += `**${position}: ${card.name.zh} (${orientation})**\n`;
+    interpretation += `關鍵詞: ${keywords.join('、')}\n`;
     interpretation += `${meaning}\n\n`;
   });
 

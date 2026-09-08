@@ -7,13 +7,12 @@ import ReadingDisplay from '@/components/ReadingDisplay';
 import HistoryPanel from '@/components/HistoryPanel';
 import { spreads } from '@/data/spreads';
 import { Spread, Reading, DrawnCard } from '@/types/tarot';
-import { drawCards, saveReading, generateLocalReading } from '@/lib/tarotUtils';
+import { saveReading, generateLocalReading } from '@/lib/tarotUtils';
 
 export default function Home() {
   const [step, setStep] = useState<'question' | 'draw' | 'reading'>('question');
   const [question, setQuestion] = useState('');
   const [selectedSpread, setSelectedSpread] = useState<Spread | null>(null);
-  const [drawnCards, setDrawnCards] = useState<DrawnCard[]>([]);
   const [currentReading, setCurrentReading] = useState<Reading | null>(null);
   const [loading, setLoading] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
@@ -25,73 +24,35 @@ export default function Home() {
   };
 
   const handleCardsDrawn = async (cards: DrawnCard[]) => {
-    setDrawnCards(cards);
     setLoading(true);
 
-    try {
-      const response = await fetch('/api/reading', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          question,
-          spreadName: selectedSpread?.name,
-          cards,
-        }),
-      });
+    // For GitHub Pages static deployment, always use local readings
+    // API route won't work on static hosting
+    const interpretation = generateLocalReading(
+      question,
+      selectedSpread?.name || '',
+      cards
+    );
 
-      let interpretation: string;
-      if (response.ok) {
-        const data = await response.json();
-        interpretation = data.interpretation;
-      } else {
-        interpretation = generateLocalReading(
-          question,
-          selectedSpread?.name || '',
-          cards
-        );
-      }
+    const reading: Reading = {
+      id: Date.now().toString(),
+      question,
+      spread: selectedSpread!,
+      cards,
+      interpretation,
+      timestamp: Date.now(),
+    };
 
-      const reading: Reading = {
-        id: Date.now().toString(),
-        question,
-        spread: selectedSpread!,
-        cards,
-        interpretation,
-        timestamp: Date.now(),
-      };
-
-      saveReading(reading);
-      setCurrentReading(reading);
-      setStep('reading');
-    } catch (error) {
-      const interpretation = generateLocalReading(
-        question,
-        selectedSpread?.name || '',
-        cards
-      );
-
-      const reading: Reading = {
-        id: Date.now().toString(),
-        question,
-        spread: selectedSpread!,
-        cards,
-        interpretation,
-        timestamp: Date.now(),
-      };
-
-      saveReading(reading);
-      setCurrentReading(reading);
-      setStep('reading');
-    } finally {
-      setLoading(false);
-    }
+    saveReading(reading);
+    setCurrentReading(reading);
+    setStep('reading');
+    setLoading(false);
   };
 
   const handleNewReading = () => {
     setStep('question');
     setQuestion('');
     setSelectedSpread(null);
-    setDrawnCards([]);
     setCurrentReading(null);
   };
 
@@ -99,7 +60,6 @@ export default function Home() {
     setCurrentReading(reading);
     setQuestion(reading.question);
     setSelectedSpread(reading.spread);
-    setDrawnCards(reading.cards);
     setStep('reading');
     setShowHistory(false);
   };

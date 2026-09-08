@@ -2,6 +2,12 @@
 
 一個精美的 AI 驅動塔羅占卜網頁應用程式,使用 Next.js 建構,提供完整的塔羅牌閱讀體驗。
 
+## 🌐 線上體驗
+
+**GitHub Pages:** https://oliverk07.github.io/ai-tarot/
+
+應用程式已部署至 GitHub Pages,可直接線上使用。GitHub Pages 版本使用內建牌義進行解讀(不依賴伺服器 API)。
+
 ## ✨ 功能特色
 
 ### 🎴 完整的塔羅牌系統
@@ -74,16 +80,33 @@ npm start
 
 ## 🌐 部署
 
-### 部署到 Vercel
+### GitHub Pages (當前部署)
 
-這個專案已優化用於 Vercel 部署:
+本專案已設定自動部署至 GitHub Pages:
+
+- **線上網址:** https://oliverk07.github.io/ai-tarot/
+- 推送到 `main` 分支時自動部署
+- 使用 GitHub Actions 建置和部署
+- 純靜態網站,使用內建牌義(不需要伺服器)
+
+GitHub Pages 版本特點:
+- ✅ 完全離線可用
+- ✅ 不需要 API key
+- ✅ 載入速度快
+- ⚠️ 解讀使用內建牌義(無 AI 生成)
+
+### 部署到 Vercel (支援 AI 功能)
+
+如需 AI 生成的個人化解讀,可部署到 Vercel:
 
 1. 將專案推送到 GitHub
 2. 在 [Vercel](https://vercel.com) 匯入專案
-3. (選用) 在 Vercel 的環境變數設定中加入 `OPENAI_API_KEY`
+3. 在 Vercel 的環境變數設定中加入 `OPENAI_API_KEY`
 4. 部署!
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/ai-tarot)
+Vercel 版本可使用 OpenAI API 生成更深入、個人化的解讀。
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/OliverK07/ai-tarot)
 
 ## ⚙️ 環境變數
 
