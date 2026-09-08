@@ -7,12 +7,14 @@ interface ReadingDisplayProps {
   reading: Reading;
   onNewReading: () => void;
   loading: boolean;
+  isAIGenerated?: boolean;
 }
 
 export default function ReadingDisplay({
   reading,
   onNewReading,
   loading,
+  isAIGenerated = false,
 }: ReadingDisplayProps) {
   return (
     <div className="max-w-5xl mx-auto animate-fade-in">
@@ -60,7 +62,19 @@ export default function ReadingDisplay({
         </div>
 
         <div className="border-t border-purple-500/30 pt-8">
-          <h3 className="text-xl font-bold text-purple-300 mb-4">解讀</h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-bold text-purple-300">解讀</h3>
+            {isAIGenerated && (
+              <span className="text-xs bg-purple-700/50 text-purple-200 px-3 py-1 rounded-full">
+                ✨ AI 解讀
+              </span>
+            )}
+            {!isAIGenerated && !loading && (
+              <span className="text-xs bg-purple-900/50 text-purple-300 px-3 py-1 rounded-full">
+                📖 牌義整理
+              </span>
+            )}
+          </div>
           {loading ? (
             <div className="text-center py-8">
               <div className="inline-block animate-pulse">

@@ -23,9 +23,11 @@
 3. **五張牌:情境分析** - 深入分析當前狀態、挑戰、建議、近期未來和最終結果
 
 ### 🤖 AI 解讀 (選用)
-- 使用 OpenAI API 生成個人化、富有洞察力的解讀
-- 如未設定 API key,自動使用內建的高品質牌義解讀
-- 無縫降級機制,確保應用始終可用
+- **Gemini 2.0 Flash** - 使用 Google 最新的 Gemini AI 生成個人化、深入的解讀
+- **瀏覽器端 AI** - 直接在您的瀏覽器中調用 AI,適用於 GitHub Pages 靜態部署
+- **免費 API key** - 可從 [Google AI Studio](https://aistudio.google.com/app/apikey) 免費取得
+- **智慧型降級** - 如未設定 API key,自動使用改良版的內建牌義解讀
+- **隱私保護** - API key 僅儲存在您的瀏覽器本地,不會上傳到任何伺服器
 
 ### 💫 精美的使用者介面
 - **神秘美學** - 深紫色、靛藍色調配金色點綴
@@ -91,39 +93,62 @@ npm start
 - 純靜態網站,使用內建牌義(不需要伺服器)
 
 GitHub Pages 版本特點:
-- ✅ 完全離線可用
-- ✅ 不需要 API key
+- ✅ 支援 Gemini AI 解讀 (需自行設定免費 API key)
+- ✅ 改良版本地牌義解讀 (無需 API key 即可使用)
 - ✅ 載入速度快
-- ⚠️ 解讀使用內建牌義(無 AI 生成)
+- ✅ API key 儲存在瀏覽器本地,隱私安全
 
-### 部署到 Vercel (支援 AI 功能)
+### 部署到 Vercel (可選)
 
-如需 AI 生成的個人化解讀,可部署到 Vercel:
+您也可以將專案部署到 Vercel:
 
 1. 將專案推送到 GitHub
 2. 在 [Vercel](https://vercel.com) 匯入專案
-3. 在 Vercel 的環境變數設定中加入 `OPENAI_API_KEY`
+3. (選用) 在 Vercel 的環境變數設定中加入 `NEXT_PUBLIC_GEMINI_API_KEY` 作為預設 API key
 4. 部署!
 
-Vercel 版本可使用 OpenAI API 生成更深入、個人化的解讀。
+**注意:** 現在使用 Gemini AI 解讀,無論部署在何處都能正常運作(包括 GitHub Pages)。
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/OliverK07/ai-tarot)
 
-## ⚙️ 環境變數
+## ⚙️ 環境變數與設定
+
+### Gemini API Key 設定 (推薦)
+
+本應用使用 **Google Gemini 2.0 Flash** 進行 AI 解讀。您可以透過兩種方式設定 API key:
+
+1. **應用程式內設定 (推薦)**
+   - 點擊右上角的 ⚙️ 設定按鈕
+   - 輸入您的 Gemini API key
+   - API key 僅儲存在您的瀏覽器本地 (localStorage)
+   - 免費取得 API key: [Google AI Studio](https://aistudio.google.com/app/apikey)
+
+2. **建置時環境變數**
+   
+   在 `.env.local` 檔案中設定:
+   ```env
+   NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key_here
+   ```
+   
+   **注意:** 以 `NEXT_PUBLIC_` 開頭的變數會在建置時嵌入靜態檔案中,因此應用程式內設定更加安全。
+
+### 環境變數參考
 
 | 變數名稱 | 說明 | 必需 | 預設值 |
 |---------|------|------|--------|
-| `OPENAI_API_KEY` | OpenAI API 金鑰,用於生成 AI 解讀 | 否 | - |
-| `OPENAI_API_BASE` | OpenAI API 基礎 URL (可設定相容服務) | 否 | `https://api.openai.com/v1` |
-| `OPENAI_MODEL` | 使用的 OpenAI 模型 | 否 | `gpt-4o-mini` |
+| `NEXT_PUBLIC_GEMINI_API_KEY` | Google Gemini API 金鑰 (建置時預設值) | 否 | - |
+| `OPENAI_API_KEY` | ⚠️ 已棄用 - 舊版 OpenAI 整合,僅用於 Vercel 等有伺服器的部署 | 否 | - |
 
 ## 📖 使用說明
 
-1. **輸入問題** - 在首頁輸入您的問題(選填),或直接選擇牌陣
-2. **選擇牌陣** - 根據您的需求選擇單張牌、三張牌或五張牌陣
-3. **洗牌抽牌** - 點擊「抽牌」按鈕,觀看精美的抽牌動畫
-4. **閱讀解讀** - 查看牌卡和詳細解讀
-5. **查看歷史** - 隨時回顧過往的占卜記錄
+1. **(選用) 設定 Gemini API Key** - 點擊右上角 ⚙️ 設定按鈕,輸入您的 [Gemini API key](https://aistudio.google.com/app/apikey) 以啟用 AI 解讀
+2. **輸入問題** - 在首頁輸入您的問題(選填),或直接選擇牌陣
+3. **選擇牌陣** - 根據您的需求選擇單張牌、三張牌或五張牌陣
+4. **洗牌抽牌** - 點擊「抽牌」按鈕,觀看精美的抽牌動畫
+5. **閱讀解讀** - 查看牌卡和詳細解讀
+   - 有 API key: 顯示「✨ AI 解讀」- 由 Gemini 生成的個人化解讀
+   - 無 API key: 顯示「📖 牌義整理」- 改良版內建牌義,仍會針對您的問題和抽中的牌卡生成專屬解讀
+6. **查看歷史** - 隨時回顧過往的占卜記錄
 
 ## 🛠️ 技術架構
 
@@ -146,12 +171,14 @@ ai-tarot/
 │   ├── HistoryPanel.tsx    # 歷史記錄面板
 │   ├── QuestionForm.tsx    # 問題表單
 │   ├── ReadingDisplay.tsx  # 解讀顯示
+│   ├── SettingsPanel.tsx   # 設定面板 (API key 管理)
 │   └── TarotCard.tsx       # 塔羅牌卡片
 ├── data/
 │   ├── spreads.ts          # 牌陣定義
 │   └── tarotDeck.ts        # 完整 78 張塔羅牌資料
 ├── lib/
-│   └── tarotUtils.ts       # 工具函式
+│   ├── geminiReading.ts    # Gemini AI 整合
+│   └── tarotUtils.ts       # 工具函式與本地解讀
 ├── types/
 │   └── tarot.ts            # TypeScript 型別定義
 └── public/                 # 靜態資源
@@ -221,26 +248,26 @@ interface Reading {
 - Tailwind 配置: `tailwind.config.ts`
 - 顏色主題: 修改 CSS 變數 `--background` 和 `--foreground`
 
-### 更換 AI 模型
+### 取得免費 Gemini API Key
 
-在 `.env` 中設定不同的模型:
+1. 前往 [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. 使用您的 Google 帳號登入
+3. 點擊「Create API Key」
+4. 複製產生的 API key
+5. 在應用程式中點擊右上角 ⚙️,貼上 API key 並儲存
 
-```env
-OPENAI_MODEL=gpt-4
-```
-
-或使用相容 OpenAI 格式的其他服務:
-
-```env
-OPENAI_API_BASE=https://your-alternative-api.com/v1
-OPENAI_MODEL=your-model-name
-```
+**注意:** 
+- Gemini API 提供免費額度,適合個人使用
+- API key 僅儲存在您的瀏覽器本地,不會上傳到任何伺服器
+- 您隨時可以在設定中清除或更換 API key
 
 ## 🔒 隱私與安全
 
 - **本地儲存** - 所有占卜記錄僅儲存在您的瀏覽器本地,不會上傳到任何伺服器
-- **API 安全** - OpenAI API key 僅在伺服器端使用,不會暴露給前端
+- **API Key 安全** - Gemini API key 僅儲存在您的瀏覽器 localStorage 中,僅您自己的裝置可存取
+- **直接通訊** - AI 請求從您的瀏覽器直接發送到 Google,不經過本應用的伺服器
 - **無追蹤** - 應用程式不包含任何追蹤或分析程式碼
+- **開源透明** - 完整原始碼公開,可自行檢視和審核
 
 ## 🎨 牌卡藝術版權聲明
 
